@@ -1,0 +1,17 @@
+{
+  "name": "Gerador Escola Aberta",
+  "short_name": "EscolaAberta",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060911",
+  "theme_color": "#f59e0b",
+  "description": "Sistema de Geração Mensal de Plano (Modelo A) e Relatório (Modelo B) - Programa Escola Aberta",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
