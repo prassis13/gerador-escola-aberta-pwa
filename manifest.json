@@ -8,9 +8,15 @@
   "description": "Sistema de Geração Mensal de Plano (Modelo A) e Relatório (Modelo B) - Programa Escola Aberta",
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
