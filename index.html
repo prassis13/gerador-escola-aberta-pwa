@@ -215,17 +215,20 @@
                     </button>
                 </div>
 
-                <!-- Controles de Zoom do Celular -->
+                <!-- Controles de Zoom e Edição -->
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-2 bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
                     <span class="text-[11px] text-slate-300 font-extrabold uppercase flex items-center gap-1.5">
                         <i class="fa-solid fa-eye text-amber-400"></i> Modo de Pré-Visualização:
                     </span>
-                    <div class="flex gap-1.5 w-full sm:w-auto">
+                    <div class="flex gap-1.5 w-full sm:w-auto flex-wrap">
                         <button id="btnZoomFit" onclick="alterarModoZoom('fit')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-[10.5px] font-black uppercase bg-amber-500 text-slate-950 border-0 cursor-pointer shadow">
                             📱 Encaixar Folha Inteira na Tela
                         </button>
                         <button id="btnZoomFull" onclick="alterarModoZoom('full')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-[10.5px] font-black uppercase text-slate-400 bg-slate-950 border border-slate-800 cursor-pointer hover:text-white">
                             🔍 Tamanho Real (100%)
+                        </button>
+                        <button id="btnEditMode" onclick="toggleModoEdicao()" class="px-3 py-1.5 rounded-lg text-[10.5px] font-black uppercase bg-emerald-500 text-slate-950 border-0 cursor-pointer shadow whitespace-nowrap">
+                            ✏️ Editar Documento
                         </button>
                     </div>
                 </div>
@@ -376,6 +379,30 @@
             aplicarZoomPreview();
         }
 
+        let modoEdicaoAtivo = false;
+
+        function toggleModoEdicao() {
+            modoEdicaoAtivo = !modoEdicaoAtivo;
+            const preview = document.getElementById('previewContainer');
+            const btn = document.getElementById('btnEditMode');
+            
+            if (modoEdicaoAtivo) {
+                preview.contentEditable = 'true';
+                preview.style.outline = '2px dashed #f59e0b';
+                preview.style.outlineOffset = '4px';
+                btn.innerHTML = '✅ Salvar Edição';
+                btn.className = 'px-3 py-1.5 rounded-lg text-[10.5px] font-black uppercase bg-amber-500 text-slate-950 border-0 cursor-pointer shadow whitespace-nowrap';
+            } else {
+                preview.contentEditable = 'false';
+                preview.style.outline = 'none';
+                preview.style.outlineOffset = '0';
+                btn.innerHTML = '✏️ Editar Documento';
+                btn.className = 'px-3 py-1.5 rounded-lg text-[10.5px] font-black uppercase bg-emerald-500 text-slate-950 border-0 cursor-pointer shadow whitespace-nowrap';
+                // Atualiza printContainer com as edições feitas
+                document.getElementById('printContainer').innerHTML = preview.innerHTML;
+            }
+        }
+
         function aplicarZoomPreview() {
             const viewport = document.getElementById('previewViewport');
             const preview = document.getElementById('previewContainer');
@@ -423,6 +450,18 @@
         }
 
         function atualizar() {
+            // Reseta modo edição se ativo ao regenerar conteúdo
+            if (modoEdicaoAtivo) {
+                modoEdicaoAtivo = false;
+                const preview = document.getElementById('previewContainer');
+                const btn = document.getElementById('btnEditMode');
+                preview.contentEditable = 'false';
+                preview.style.outline = 'none';
+                preview.style.outlineOffset = '0';
+                btn.innerHTML = '✏️ Editar Documento';
+                btn.className = 'px-3 py-1.5 rounded-lg text-[10.5px] font-black uppercase bg-emerald-500 text-slate-950 border-0 cursor-pointer shadow whitespace-nowrap';
+            }
+
             const mes = document.getElementById('inputMesAno').value;
             const data = document.getElementById('inputDataEmissao').value;
             const ativ = document.getElementById('inputAtividades').value;
